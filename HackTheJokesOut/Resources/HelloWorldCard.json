@@ -16,12 +16,12 @@
   "actions": [
     {
       "type": "Action.OpenUrl",
-      "title": "Bot Framework Docs",
+      "title": "Previous",
       "url": "https://docs.microsoft.com/en-us/azure/bot-service/?view=azure-bot-service-4.0"
     },
     {
       "type": "Action.OpenUrl",
-      "title": "Teams Toolkit Docs",
+      "title": "Next",
       "url": "https://aka.ms/teamsfx-docs"
     }
   ],

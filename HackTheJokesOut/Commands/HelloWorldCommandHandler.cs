@@ -4,6 +4,7 @@ using Microsoft.Bot.Builder;
 using Microsoft.Bot.Schema;
 using Microsoft.TeamsFx.Conversation;
 using Newtonsoft.Json;
+using static Microsoft.Graph.Constants;
 
 namespace HackTheJokesOut.Commands
 {
@@ -19,13 +20,15 @@ namespace HackTheJokesOut.Commands
         public IEnumerable<ITriggerPattern> TriggerPatterns => new List<ITriggerPattern>
         {
             // Used to trigger the command handler if the command text contains 'helloWorld'
-            new RegExpTrigger("helloWorld")
-        };
+            new RegExpTrigger("devJoke")
+		};
 
         public HelloWorldCommandHandler(ILogger<HelloWorldCommandHandler> logger)
         {
             _logger = logger;
         }
+
+
 
         public async Task<ICommandResponse> HandleCommandAsync(ITurnContext turnContext, CommandMessage message, CancellationToken cancellationToken = default)
         {
@@ -39,8 +42,8 @@ namespace HackTheJokesOut.Commands
             (
                 new HelloWorldModel
                 {
-                    Title = "Your Hello World Bot is Running",
-                    Body = "Congratulations! Your hello world bot is running. Click the documentation below to learn more about Bots and the Teams Toolkit.",
+                    Title = "You got a new DevJoke:",
+                    Body = "Bla bla bla Haha",
                 }
             );
 
@@ -58,4 +61,17 @@ namespace HackTheJokesOut.Commands
             return new ActivityCommandResponse(activity);
         }
     }
+
+	public class MyBot : ActivityHandler
+	{
+		private static readonly HttpClient client = new HttpClient();
+
+		protected override async Task OnMessageActivityAsync(ITurnContext<IMessageActivity> turnContext, CancellationToken cancellationToken)
+		{
+			string url = "https://api.example.com";
+			string response = await client.GetStringAsync(url);
+			var message = MessageFactory.Text(response);
+			await turnContext.SendActivityAsync(message, cancellationToken);
+		}
+	}
 }

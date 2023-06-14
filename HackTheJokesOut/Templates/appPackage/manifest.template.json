@@ -41,10 +41,12 @@
                         "groupchat"
                     ],
                     "commands": [
-                        {
-                            "title": "helloWorld",
-                            "description": "A helloworld command to send a welcome message"
-                        }
+                      {
+                        "title": "devJoke",
+                        "description": "Let´s bring a bit of fun in your dev life"
+                      }
+
+
                     ]
                 }
             ]
