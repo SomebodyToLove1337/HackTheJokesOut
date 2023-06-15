@@ -42,6 +42,8 @@ builder.Services.AddSingleton(sp =>
     return new ConversationBot(options);
 });
 
+
+
 // Create the bot as a transient. In this case the ASP Controller is expecting an IBot.
 builder.Services.AddTransient<IBot, TeamsBot>();
 

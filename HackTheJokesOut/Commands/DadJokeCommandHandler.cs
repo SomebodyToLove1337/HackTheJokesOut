@@ -8,52 +8,25 @@ using Newtonsoft.Json;
 namespace HackTheJokesOut.Commands
 {
 	// Get Jokes from API
-	public class ApiRequest
-	{
-		private static readonly HttpClient client = new HttpClient();
 
-		public async Task<string> GetResponseApi(string url)
-		{
-			try
-			{
-				HttpResponseMessage response = await client.GetAsync(url);
-				response.EnsureSuccessStatusCode();
-				string responseBody = await response.Content.ReadAsStringAsync();
-				return responseBody;
-			}
-			catch (HttpRequestException e)
-			{
-				Console.WriteLine("\nException Caught!");
-				Console.WriteLine("Message :{0} ", e.Message);
-				return null;
-			}
-		}
-	}
-
-	public class Joke
-	{
-		public string Question { get; set; }
-		public string Punchline { get; set; }
-	}
 
 
 	/// <summary>
-	/// The <see cref="HelloWorldCommandHandler"/> registers a pattern with the <see cref="ITeamsCommandHandler"/> and 
+	/// The <see cref="DadJokeCommandHandler"/> registers a pattern with the <see cref="ITeamsCommandHandler"/> and 
 	/// responds with an Adaptive Card if the user types the <see cref="TriggerPatterns"/>.
 	/// </summary>
-	public class HelloWorldCommandHandler : ITeamsCommandHandler
+	public class DadJokeCommandHandler : ITeamsCommandHandler
 	{
-		private readonly ILogger<HelloWorldCommandHandler> _logger;
+		private readonly ILogger<DadJokeCommandHandler> _logger;
 		private readonly string _adaptiveCardFilePath = Path.Combine(".", "Resources", "HelloWorldCard.json");
 
 		public IEnumerable<ITriggerPattern> TriggerPatterns => new List<ITriggerPattern>
 		{
             // Used to trigger the command handler if the command text contains 'helloWorld'
-            new RegExpTrigger("devJoke")
+            new RegExpTrigger("dadJoke")
 		};
 
-
-		public HelloWorldCommandHandler(ILogger<HelloWorldCommandHandler> logger)
+		public DadJokeCommandHandler(ILogger<DadJokeCommandHandler> logger)
 		{
 			_logger = logger;
 		}
@@ -68,9 +41,8 @@ namespace HackTheJokesOut.Commands
 			var cardTemplate = await File.ReadAllTextAsync(_adaptiveCardFilePath, cancellationToken);
 
 			// API Call
-
 			ApiRequest apiRequest = new ApiRequest();
-			string response = await apiRequest.GetResponseApi("https://backend-omega-seven.vercel.app/api/getjoke");
+			string response = await apiRequest.GetResponseApi("https://icanhazdadjoke.com");
 			List<Joke> jokes = JsonConvert.DeserializeObject<List<Joke>>(response);
 			string jokeQuestion = jokes[0].Question;
 			string jokePunchline = jokes[0].Punchline;
@@ -95,16 +67,12 @@ namespace HackTheJokesOut.Commands
 				}
 			);
 
-
 			// send response
 			return new ActivityCommandResponse(activity);
 		}
 
 
-
-
 	}
 
+
 }
-
-

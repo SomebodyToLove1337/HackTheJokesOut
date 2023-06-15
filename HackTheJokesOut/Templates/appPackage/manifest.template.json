@@ -44,9 +44,11 @@
                       {
                         "title": "devJoke",
                         "description": "Let´s bring a bit of fun in your dev life"
+                      },
+                      {
+                        "title": "dadJoke",
+                        "description": "Let´s bring a bit of fun in your dev life"
                       }
-
-
                     ]
                 }
             ]
