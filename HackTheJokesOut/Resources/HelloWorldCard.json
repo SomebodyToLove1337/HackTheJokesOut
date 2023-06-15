@@ -5,24 +5,23 @@
       "type": "TextBlock",
       "size": "Medium",
       "weight": "Bolder",
-      "text": "${title}"
+      "text": "${title}",
+      "wrap": true
     },
     {
       "type": "TextBlock",
       "text": "${body}",
       "wrap": true
     }
+
   ],
   "actions": [
     {
-      "type": "Action.OpenUrl",
-      "title": "Previous",
-      "url": "https://docs.microsoft.com/en-us/azure/bot-service/?view=azure-bot-service-4.0"
-    },
-    {
-      "type": "Action.OpenUrl",
+      "type": "Action.Submit",
       "title": "Next",
-      "url": "https://aka.ms/teamsfx-docs"
+      "data": {
+        "buttonClicked": true
+      }
     }
   ],
   "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
